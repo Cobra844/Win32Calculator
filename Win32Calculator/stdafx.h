@@ -4,6 +4,9 @@
 #include <iostream>
 #include <CommCtrl.h>
 #include <fstream>
+#include <vector>
+#include <atlstr.h> // Added this so I could use CString.
+#include <sstream> // Added this so I could convert int to std::string.
 
 #include "CalcConfig.h"
 

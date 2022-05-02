@@ -3,5 +3,7 @@ class CalcLogic
 {
 public:
 	static std::wstring CalcSumString;
-	void FindTotal(std::wstring);
+	static std::wstring CalcResultString;
+	static bool FindTotal(HWND);
+	static bool ValidCalculation;
 };

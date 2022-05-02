@@ -49,10 +49,11 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, INT)
 
 LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM WParam, LPARAM LParam)
 {
+	INT64 Result;
 	HDC Hdc;
 	PS PaintStruct;
 	RECT WindowRect{ };
-	std::wofstream MyFile("Log1.txt");
+	std::wstring ConvertIntToWString;
 	wchar_t* CalcSumString = &CalcLogic::CalcSumString[CalcLogic::CalcSumString.size() - 1];
 	switch (WindowMessage)
 	{
@@ -183,13 +184,15 @@ LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM 
 			break;
 		case EqualButtonID:
 			Debug.LogToConsole("EqualButtonID was pressed!");
-			if ((wcscmp(CalcSumString, TEXT("+")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"+\" operator!"), TEXT("Warning!"), MB_OK, NULL);
+			if ((wcscmp(CalcSumString, TEXT(" ")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you insert at least two values connected by an operator!"), TEXT("Warning!"), MB_OK, NULL);
+			else if ((wcscmp(CalcSumString, TEXT("+")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"+\" operator!"), TEXT("Warning!"), MB_OK, NULL);
 			else if ((wcscmp(CalcSumString, TEXT("-")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"-\" operator!"), TEXT("Warning!"), MB_OK, NULL);
 			else if ((wcscmp(CalcSumString, TEXT("*")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"*\" operator!"), TEXT("Warning!"), MB_OK, NULL);
 			else if ((wcscmp(CalcSumString, TEXT("/")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"/\" operator!"), TEXT("Warning!"), MB_OK, NULL);
 			else
 			{
-				//Logic.FindTotal()
+				Result = 0;
+				CalcLogic::FindTotal(WindowHandle);
 			}
 			break;
 		}
@@ -238,6 +241,70 @@ LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM 
 			Debug.LogToConsole("0x39 key was pressed!");
 			CalcLogic::CalcSumString += TEXT("9");
 			break;
+		case VK_ADD:
+			Debug.LogToConsole("VK_ADD key was pressed!");
+			if (!(wcscmp(CalcSumString, TEXT(" ")) == 0))
+			{
+				if (!(wcscmp(CalcSumString, TEXT("+")) == 0))
+				{
+					if (!(wcscmp(CalcSumString, TEXT("-")) == 0))
+					{
+						if (!(wcscmp(CalcSumString, TEXT("*")) == 0))
+						{
+							if (!(wcscmp(CalcSumString, TEXT("/")) == 0)) CalcLogic::CalcSumString += TEXT("+");
+						}
+					}
+				}
+			}
+			break;
+		case VK_SUBTRACT:
+			Debug.LogToConsole("VK_SUBTRACT key was pressed!");
+			if (!(wcscmp(CalcSumString, TEXT(" ")) == 0))
+			{
+				if (!(wcscmp(CalcSumString, TEXT("+")) == 0))
+				{
+					if (!(wcscmp(CalcSumString, TEXT("-")) == 0))
+					{
+						if (!(wcscmp(CalcSumString, TEXT("*")) == 0))
+						{
+							if (!(wcscmp(CalcSumString, TEXT("/")) == 0)) CalcLogic::CalcSumString += TEXT("-");
+						}
+					}
+				}
+			}
+			break;
+		case VK_MULTIPLY:
+			Debug.LogToConsole("VK_MULTIPLY key was pressed!");
+			if (!(wcscmp(CalcSumString, TEXT(" ")) == 0))
+			{
+				if (!(wcscmp(CalcSumString, TEXT("+")) == 0))
+				{
+					if (!(wcscmp(CalcSumString, TEXT("-")) == 0))
+					{
+						if (!(wcscmp(CalcSumString, TEXT("*")) == 0))
+						{
+							if (!(wcscmp(CalcSumString, TEXT("/")) == 0)) CalcLogic::CalcSumString += TEXT("*");
+						}
+					}
+				}
+			}
+			break;
+		case VK_DIVIDE:
+			Debug.LogToConsole("VK_DIVIDE key was pressed!");
+			if (!(wcscmp(CalcSumString, TEXT(" ")) == 0))
+			{
+				if (!(wcscmp(CalcSumString, TEXT("+")) == 0))
+				{
+					if (!(wcscmp(CalcSumString, TEXT("-")) == 0))
+					{
+						if (!(wcscmp(CalcSumString, TEXT("*")) == 0))
+						{
+							if (!(wcscmp(CalcSumString, TEXT("/")) == 0)) CalcLogic::CalcSumString += TEXT("/");
+						}
+					}
+				}
+			}
+			break;
 		case VK_LEFT:
 			Debug.LogToConsole("VK_LEFT key was pressed!");
 			if (CalcLogic::CalcSumString.size() >= 6) CalcLogic::CalcSumString.pop_back();
@@ -245,6 +312,19 @@ LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM 
 		case VK_BACK:
 			Debug.LogToConsole("VK_BACK key was pressed!");
 			if (CalcLogic::CalcSumString.size() >= 6) CalcLogic::CalcSumString.pop_back();
+			break;
+		case VK_RETURN:
+			Debug.LogToConsole("VK_RETURN key was pressed!");
+			if ((wcscmp(CalcSumString, TEXT("+")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"+\" operator!"), TEXT("Warning!"), MB_OK, NULL);
+			else if ((wcscmp(CalcSumString, TEXT("-")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"-\" operator!"), TEXT("Warning!"), MB_OK, NULL);
+			else if ((wcscmp(CalcSumString, TEXT("*")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"*\" operator!"), TEXT("Warning!"), MB_OK, NULL);
+			else if ((wcscmp(CalcSumString, TEXT("/")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"/\" operator!"), TEXT("Warning!"), MB_OK, NULL);
+			else
+			{
+				Result = 0;
+				CalcLogic::FindTotal(WindowHandle);
+				CalcLogic::CalcResultString = TEXT("RESULT: ");
+			}
 			break;
 		default:
 			if (UseNumPadKeys)
@@ -306,7 +386,7 @@ LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM 
 		std::cout << "CalcLogic - CalcSumString: ";
 		std::wcout << CalcLogic::CalcSumString << std::endl;
 		WindowRect.top += 50;
-		DrawText(Hdc, TEXT("RESULT: "), -1, &WindowRect, DT_TOP | DT_CENTER);
+		DrawText(Hdc, CalcLogic::CalcResultString.c_str(), -1, &WindowRect, DT_TOP | DT_CENTER);
 		EndPaint(WindowHandle, &PaintStruct);
 		break;
 	case WM_CLOSE:
