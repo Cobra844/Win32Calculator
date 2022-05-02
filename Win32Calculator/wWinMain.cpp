@@ -23,7 +23,7 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, INT)
 	WindowClass.cbClsExtra = NULL;
 	WindowClass.cbWndExtra = NULL;
 	WindowClass.hInstance = HInstance;
-	WindowClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	WindowClass.hbrBackground = CreateSolidBrush(RGB(202, 238, 255));
 	WindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	WindowClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	WindowClass.hIconSm = NULL;
@@ -380,6 +380,7 @@ LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM 
 		GetClientRect(WindowHandle, &WindowRect);
 		InvalidateRect(WindowHandle, &WindowRect, TRUE);
 		Hdc = BeginPaint(WindowHandle, &PaintStruct);
+		SetBkColor(Hdc, RGB(64, 192, 255));
 		DrawText(Hdc, TEXT("Win32 Calculator!"), -1, &WindowRect, DT_TOP | DT_CENTER);
 		WindowRect.top += 25;
 		DrawText(Hdc, CalcLogic::CalcSumString.c_str(), -1, &WindowRect, DT_TOP | DT_CENTER);
