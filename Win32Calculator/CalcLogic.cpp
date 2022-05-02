@@ -237,5 +237,6 @@ bool CalcLogic::FindTotal(HWND WindowHandle)
 	CString NumCString = NumString.c_str();
 	CalcLogic::CalcResultString += NumCString;
 	std::wcout << CalcLogic::CalcSumString;
+	PlaySound(TEXT("SystemStart.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	return true;
 }
