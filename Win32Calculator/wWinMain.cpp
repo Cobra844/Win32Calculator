@@ -23,7 +23,7 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, INT)
 	WindowClass.cbClsExtra = NULL;
 	WindowClass.cbWndExtra = NULL;
 	WindowClass.hInstance = HInstance;
-	WindowClass.hbrBackground = CreateSolidBrush(RGB(202, 238, 255));
+	WindowClass.hbrBackground = CreateSolidBrush(RGB(192, 224, 255));
 	WindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	WindowClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	WindowClass.hIconSm = NULL;
