@@ -315,7 +315,8 @@ LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM 
 			break;
 		case VK_RETURN:
 			Debug.LogToConsole("VK_RETURN key was pressed!");
-			if ((wcscmp(CalcSumString, TEXT("+")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"+\" operator!"), TEXT("Warning!"), MB_OK, NULL);
+			if ((wcscmp(CalcSumString, TEXT(" ")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you insert at least two values connected by an operator!"), TEXT("Warning!"), MB_OK, NULL);
+			else if ((wcscmp(CalcSumString, TEXT("+")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"+\" operator!"), TEXT("Warning!"), MB_OK, NULL);
 			else if ((wcscmp(CalcSumString, TEXT("-")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"-\" operator!"), TEXT("Warning!"), MB_OK, NULL);
 			else if ((wcscmp(CalcSumString, TEXT("*")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"*\" operator!"), TEXT("Warning!"), MB_OK, NULL);
 			else if ((wcscmp(CalcSumString, TEXT("/")) == 0)) MessageBoxEx(WindowHandle, TEXT("You can't calculate until you place a value after your \"/\" operator!"), TEXT("Warning!"), MB_OK, NULL);
@@ -323,7 +324,6 @@ LRESULT __stdcall WindowProcedure(HWND WindowHandle, UINT WindowMessage, WPARAM 
 			{
 				Result = 0;
 				CalcLogic::FindTotal(WindowHandle);
-				CalcLogic::CalcResultString = TEXT("RESULT: ");
 			}
 			break;
 		default:
